@@ -10,6 +10,8 @@
 namespace spd = spdlog;
 void test_ming_fw()
 {
+    try
+    {
     spd::set_level(spd::level::info);
     spd::get("console")->set_level(spd::level::debug);
     spd::get("console")->info("can be seen");
@@ -21,7 +23,14 @@ void test_ming_fw()
         for (int i = 0; i < 10; ++i)
             rotating_logger->info("{} * {} equals {:>10}", i, i, i*i);
         
+    spdlog::drop_all();
+    }
 
+    catch (const spd::spdlog_ex& ex)
+    {
+        std::cout << "Log failed: " << ex.what() << std::endl;
+        return EXIT_FAILURE;
+    }
 }
 int test_spdlog()
 {
