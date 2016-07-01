@@ -8,7 +8,6 @@
 #include <map>
 //#define DEBUG
 #include "include.hpp"
-#include "renesolalog.hpp"
 using std::string;
 class iconfig:public boost::enable_shared_from_this<iconfig>, boost::noncopyable
 {
