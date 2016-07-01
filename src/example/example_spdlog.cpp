@@ -13,6 +13,7 @@ void test_ming_fw()
     try
     {
     spd::set_level(spd::level::info);
+    auto console = spd::stdout_logger_mt("console", true);
     spd::get("console")->set_level(spd::level::debug);
     spd::get("console")->info("can be seen");
 
