@@ -1,7 +1,7 @@
 #include "config.hpp"
 
 #include "test5.hpp"
-
+#include "example_spdlog.h"
 int main()
 {
 	try
@@ -9,7 +9,8 @@ int main()
 		register_signal();
 
 		{
-			x5::test();
+			test_spdlog();
+			//x5::test();
 			//this_thread::sleep_for(chrono::seconds(10));
 			//test1();
 		}
