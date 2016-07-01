@@ -29,7 +29,6 @@ void test_ming_fw()
     catch (const spd::spdlog_ex& ex)
     {
         std::cout << "Log failed: " << ex.what() << std::endl;
-        return EXIT_FAILURE;
     }
 }
 int test_spdlog()
