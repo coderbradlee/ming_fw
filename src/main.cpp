@@ -6,8 +6,6 @@ int main()
 {
 	try
 	{
-		register_signal();
-
 		{
 			test_spdlog();
 			//x5::test();
