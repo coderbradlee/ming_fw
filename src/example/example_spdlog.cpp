@@ -11,7 +11,7 @@ namespace spd = spdlog;
 void test_ming_fw()
 {
     spd::set_level(spd::level::info);
-    console->set_level(spd::level::debug);
+    spd::get("console")->set_level(spd::level::debug);
     spd::get("console")->info("can be seen");
 
     size_t q_size = 4096; //queue size must be power of 2
