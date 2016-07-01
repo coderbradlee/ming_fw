@@ -7,7 +7,8 @@ int main()
 	try
 	{
 		{
-			test_spdlog();
+			test_ming_fw();
+			//test_spdlog();
 			//x5::test();
 			//this_thread::sleep_for(chrono::seconds(10));
 			//test1();

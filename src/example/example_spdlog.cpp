@@ -8,6 +8,21 @@
 #include "example_spdlog.h"
 
 namespace spd = spdlog;
+void test_ming_fw()
+{
+    spd::set_level(spd::level::info);
+    console->set_level(spd::level::debug);
+    spd::get("console")->info("can be seen");
+
+    size_t q_size = 4096; //queue size must be power of 2
+    spdlog::set_async_mode(q_size);
+    //spd::set_pattern("[%H:%M:%S %z] [thread %t] %v ***");
+    auto rotating_logger = spd::rotating_logger_mt("[thread %t]", "logs/ming_fw", 1048576 * 15, 300);
+        for (int i = 0; i < 10; ++i)
+            rotating_logger->info("{} * {} equals {:>10}", i, i, i*i);
+        
+
+}
 int test_spdlog()
 {
     try
@@ -84,7 +99,7 @@ void async_example()
 {
     size_t q_size = 4096; //queue size must be power of 2
     spdlog::set_async_mode(q_size);
-    auto async_file = spd::daily_logger_st("async_file_logger", "logs/async_log.txt");
+    auto async_file = spd::daily_logger_st("async_file_logger", "logs/ming_fw");
     for (int i = 0; i < 100; ++i)
         async_file->info("Async message #{}", i);
 }
