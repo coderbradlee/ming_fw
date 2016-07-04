@@ -77,7 +77,7 @@ public:
 	
 private:
 	static boost::mutex mu_;
-	static boost::shared_ptr<singleton_boost_log> ps_;
+	static boost::shared_ptr<singleton_ming_log> ps_;
 	static spd::rotating_logger_mt log_file;
 	static spd::rotating_logger_mt log_console;	
 };
