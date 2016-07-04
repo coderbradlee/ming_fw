@@ -12,12 +12,12 @@ public:
 	{
 		spdlog::drop_all();
 	}
-	static boost::shared_ptr<singleton_boost_log> get_instance()
+	static boost::shared_ptr<singleton_ming_log> get_instance()
 	{
 		boost::mutex::scoped_lock t(mu_);
 		if (ps_ == nullptr)
 		{
-			ps_ = boost::shared_ptr<singleton_boost_log>(new singleton_boost_log());
+			ps_ = boost::shared_ptr<singleton_ming_log>(new singleton_ming_log());
 		}
 		/*if (initsink_ == nullptr)
 		{
