@@ -76,7 +76,7 @@ namespace x6
             virtual boost::shared_ptr<splitter> create()=0;
             virtual ~splitter_factory(){}
         };
-        class file_splitter_factory
+        class file_splitter_factory:public splitter_factory
         {
         public:
             boost::shared_ptr<splitter> create()
@@ -84,7 +84,7 @@ namespace x6
                 return boost::shared_ptr<splitter>(new file_splitter());
             }
         };
-        class video_splitter_factory
+        class video_splitter_factory:public splitter_factory
         {
         public:
             boost::shared_ptr<splitter> create()
