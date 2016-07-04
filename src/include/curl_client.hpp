@@ -11,7 +11,7 @@
 class curl_client:boost::noncopyable
 {
 	public:
-	curl_client(const std::string& url) : m_url(url),m_request_status(0),m_data(nullptr)
+	curl_client(const std::string& url) : m_url(url),m_request_status(0))
 	{
 		//register callback
 		//register_callback();
@@ -169,7 +169,7 @@ protected:
 	
 	
 public:
-	boost::shared_ptr<std::string> m_data;
+	std::string m_data;
 protected:	
 	CURL* m_curl;
 	std::string m_url;
