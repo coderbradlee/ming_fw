@@ -78,13 +78,13 @@ public:
 private:
 	static boost::mutex mu_;
 	static boost::shared_ptr<singleton_ming_log> ps_;
-	static spd::rotating_logger_mt log_file;
-	static spd::rotating_logger_mt log_console;	
+	static std::shared_ptr<spd::logger> log_file;
+	static std::shared_ptr<spd::logger> log_console;	
 };
 boost::shared_ptr<singleton_ming_log> singleton_ming_log::ps_ = nullptr;
 boost::mutex singleton_ming_log::mu_;
-spd::rotating_logger_mt singleton_ming_log::log_file;
-spd::rotating_logger_mt singleton_ming_log::log_console;
+std::shared_ptr<spd::logger> singleton_ming_log::log_file;
+std::shared_ptr<spd::logger> singleton_ming_log::log_console;
 boost::shared_ptr<singleton_ming_log> ming_log = singleton_ming_log::get_instance();
 typedef ming_log->log_file log_files;
 typedef ming_log->log_console log_consoles;
