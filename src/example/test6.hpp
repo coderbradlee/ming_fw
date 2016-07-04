@@ -104,6 +104,8 @@ namespace x6
                 boost::shared_ptr<splitter> s=m_sf->create();
                 s->split();
             }
+        private:
+            boost::shared_ptr<splitter_factory> m_sf;
         };
         void test()
         {
