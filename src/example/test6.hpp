@@ -30,8 +30,7 @@ namespace x6
             { 
                 if (quotes.find(usditem) == quotes.end()) 
                 {
-                    //cout<<item.code<<":"<<__FILE__<<":"<<__LINE__<<endl;
-                    ming_log->get_log_console()->info()<<item.code<<":"<<__FILE__<<":"<<__LINE__;
+                    ming_log->get_log_console()->info()<<"cannot find :"<<usditem<<__FILE__<<":"<<__LINE__;
                 }
             }
             catch(std::exception& e)
