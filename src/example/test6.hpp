@@ -81,7 +81,7 @@ namespace x6
         public:
             boost::shared_ptr<splitter> create()
             {
-                return new file_splitter();
+                return boost::shared_ptr<splitter>(new file_splitter());
             }
         };
         class video_splitter_factory
@@ -89,7 +89,7 @@ namespace x6
         public:
             boost::shared_ptr<splitter> create()
             {
-                return new video_splitter();
+                return boost::shared_ptr<splitter>(new video_splitter());
             }
         };
         class win_form
