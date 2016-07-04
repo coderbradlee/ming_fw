@@ -58,7 +58,23 @@ public:
 				spd::set_level(spd::level::warn);
 			}
 	        log_console = spd::stdout_logger_mt("console", true);
-	        spd::get("console")->set_level(spd::level::debug);
+	        if(get_config->m_log_console_level=="info")
+			{
+				spd::get("console")->set_level(spd::level::info);
+			}
+			else if(get_config->m_log_console_level=="debug")
+			{
+				spd::get("console")->set_level(spd::level::debug);
+			}
+			else if(get_config->m_log_console_level=="err")
+			{
+				spd::get("console")->set_level(spd::level::err);
+			}
+			else
+			{
+				spd::get("console")->set_level(spd::level::warn);
+			}
+	        
 	        //spd::get("console")->info("can be seen");
 	        //console->info() << "Streams are supported too  " << 1;
 	        size_t q_size = 4096; //queue size must be power of 2

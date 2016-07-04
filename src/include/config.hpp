@@ -67,6 +67,7 @@ class iconfig:public boost::enable_shared_from_this<iconfig>, boost::noncopyable
 
 			m_log_name = m_pt.get<std::string>("log.name");
 			m_log_level = m_pt.get<std::string>("log.level");
+			m_log_console_level= m_pt.get<std::string>("log.console_level");
 			m_log_size = m_pt.get<size_t>("log.size");
 			m_log_numbers = m_pt.get<size_t>("log.numbers");
 		}
@@ -114,6 +115,7 @@ class iconfig:public boost::enable_shared_from_this<iconfig>, boost::noncopyable
 		static boost::shared_ptr<iconfig> m_ps;
 		string m_log_name;
 		string m_log_level;
+		string m_log_console_level;
 		size_t m_log_size;
 		size_t m_log_numbers;
 };
