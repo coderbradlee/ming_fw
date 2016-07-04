@@ -32,6 +32,11 @@ namespace x6
                 {
                     ming_log->get_log_console()->info()<<"cannot find :"<<usditem<<__FILE__<<":"<<__LINE__;
                 }
+                else
+                {
+                    const auto& from_usd_exchange_rate=quotes[usditem];
+                    ming_log->get_log_console()->info()<<from_usd_exchange_rate<<__FILE__<<":"<<__LINE__;
+                }
             }
             catch(std::exception& e)
             {
