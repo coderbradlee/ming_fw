@@ -324,11 +324,11 @@ namespace x5
             
             for(int i=0;i<1000000;++i)
             {
-                ming_log->get_log_console()->info("info can be seen")<<"Streams are supported too  ";
-            ming_log->get_log_file()->info("info can be seen")<<"Streams are supported too  ";
+                //ming_log->get_log_console()->info("info can be seen")<<"Streams are supported too  ";
+                ming_log->get_log_file()->info("info can be seen")<<"Streams are supported too  ";
 
-            ming_log->get_log_console()->debug("debug can not be seen")<<"Streams are supported too  ";
-            ming_log->get_log_file()->debug("debug can not be seen")<<"Streams are supported too  ";
+               // ming_log->get_log_console()->debug("debug can not be seen")<<"Streams are supported too  ";
+                //ming_log->get_log_file()->debug("debug can not be seen")<<"Streams are supported too  ";
             }
             std::cout << "now time elapsed:" << pass.format(6) << std::endl;
 
