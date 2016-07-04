@@ -319,19 +319,35 @@ namespace x5
     {
         void test()
         {
-            boost::timer::cpu_timer pass;
-            pass.start();
-            
-            for(int i=0;i<1000000;++i)
             {
-                //ming_log->get_log_console()->info("info can be seen")<<"Streams are supported too  ";
-                ming_log->get_log_file()->info("info can be seen")<<"Streams are supported too  ";
+                boost::timer::cpu_timer pass;
+                pass.start();
+                
+                for(int i=0;i<1000000;++i)
+                {
+                    //ming_log->get_log_console()->info("info can be seen")<<"Streams are supported too  ";
+                    ming_log->get_log_file()->info("info can be seen")<<"Streams are supported too  ";
 
-               // ming_log->get_log_console()->debug("debug can not be seen")<<"Streams are supported too  ";
-                //ming_log->get_log_file()->debug("debug can not be seen")<<"Streams are supported too  ";
+                   // ming_log->get_log_console()->debug("debug can not be seen")<<"Streams are supported too  ";
+                    //ming_log->get_log_file()->debug("debug can not be seen")<<"Streams are supported too  ";
+                }
+                std::cout << "now time elapsed:" << pass.format(6) << std::endl;
+
             }
-            std::cout << "now time elapsed:" << pass.format(6) << std::endl;
-
+            
+            {
+                boost::timer::cpu_timer pass;
+                pass.start();
+                size_t q_size = 4096; //queue size must be power of 2
+                spdlog::set_async_mode(q_size);
+                spd::set_pattern("[%l][%Y-%m-%d %H:%M:%S.%e][thread %t]%v");
+                auto rotating_logger = spd::rotating_logger_mt("t", "logs/ming_fwsssss", 1048576 * 150, 300);
+                for (int i = 0; i < 1000000; ++i)
+                        rotating_logger->info("{} * {} equals {:>10}", i, i, i*i);
+                    
+                spdlog::drop_all();
+                std::cout << "now time elapsed:" << pass.format(6) << std::endl;
+            }
         }
     }
 	void test()
