@@ -109,7 +109,8 @@ namespace x6
         };
         void test()
         {
-            boost::shared_ptr<splitter_factory> sf(new video_splitter_factory());
+            //boost::shared_ptr<splitter_factory> sf(new video_splitter_factory());
+            boost::shared_ptr<splitter_factory> sf(new file_splitter_factory());
             boost::shared_ptr<win_form> wf(new win_form(sf));
             wf->click();
         }
