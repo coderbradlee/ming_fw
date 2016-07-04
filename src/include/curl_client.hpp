@@ -1,267 +1,185 @@
-#ifndef WEBCLIENT_HPP
-#define	WEBCLIENT_HPP
+#ifndef CURL_CLIENT_HPP
+#define	CURL_CLIENT_HPP
 
 #include <curl/curl.h>
 #include <string.h>
 #include <cstdarg>
 #include <iostream>
 #include <map>
-
-class WebClient {
-public:
-    WebClient();
-	WebClient(const std::string&, std::string user, std::string password);
-	WebClient(const std::string&, std::string user, std::string password,std::string def);
-    bool makeRequest();
-    bool makePost();
-    bool makeGet();
-    bool makeDelete();
-    void postField(std::string, std::string);
-	void add_header(std::string h)
-	{
-		m_headerlist = curl_slist_append(m_headerlist, h.c_str());
-	}
-    std::string getResult() { return m_data; }
-    void reset();
-    void setURL(const std::string&);
-    virtual ~WebClient();
-protected:
-    CURL* m_curl;
-    std::string m_data;
-    std::map<std::string, std::string> m_postfields;
-    std::string urlEncode(const std::string&);
-    char * encodedPostFields;
-	struct curl_slist *m_headerlist;
-public:
-	size_t writeData(const char* buffer, size_t size, size_t nmemb); 
-protected:
-    std::string encodePostFields();
-    static size_t writeDataCallback(char*, size_t, size_t, void*);
-    
-private:
-    WebClient(const WebClient& orig);
-};
-
-
 #include <cstdio>
 
-WebClient::WebClient() {
-	curl_global_init(CURL_GLOBAL_ALL);
-	encodedPostFields = NULL;
-	m_curl = curl_easy_init();
-	curl_easy_setopt(m_curl, CURLOPT_FOLLOWLOCATION, 1);
-	curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, writeDataCallback);
-	curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, this);
-	m_headerlist = NULL;
+class curl_client:boost::noncopyable
+{
+	public:
+	curl_client(const std::string& url) : m_url(url),m_request_status(0),m_data(nullptr)
+	{
+		//register callback
+		//register_callback();
+		curl_global_init(CURL_GLOBAL_ALL);
+		m_curl = curl_easy_init();
+		curl_easy_setopt(m_curl, CURLOPT_FOLLOWLOCATION, 1);
+		curl_easy_setopt(m_curl, CURLOPT_WRITEDATA, this);
+		
+#ifdef DEBUG
+		curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1);
+#endif
+		//curl(m_download_url, "GET", filename, true);
+
+		if (!share_handle)
+		{
+			share_handle = curl_share_init();
+			curl_share_setopt(share_handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+		}
+		curl_easy_setopt(m_curl, CURLOPT_SHARE, share_handle);
+		curl_easy_setopt(m_curl, CURLOPT_DNS_CACHE_TIMEOUT, 600 * 5);
+		curl_easy_setopt(m_curl, CURLOPT_TIMEOUT, 200 );
+		curl_easy_setopt(m_curl, CURLOPT_CONNECTTIMEOUT,300);
+	}
+	virtual ~curl_client()
+	{
+		curl_easy_cleanup(m_curl);
+		curl_global_cleanup();
+	}
+	void request(const std::string& method, 
+		const std::string& path, 
+		const std::string& param, 
+		const std::string& content)
+	{
+		/////////////////////////////////////
+		ming_log->get_log_console()->info()<<"request:"<<method<<":"<<path<<":"<<param<<":"<<content;
+		
+        ming_log->get_log_file()->info()<<"request:"<<method<<":"<<path<<":"<<param<<":"<<content;
+		/////////////////////////////////////////////////////
+		//t_currency_exchange_rate 
+		curl(path, method, param, content);
+	}
+	string get_data()
+	{
+		return m_data;
+	}
+	long int get_status()
+	{
+		return m_request_status;
+	}
+	long int get_length()
+	{
+		return m_data.length();
+	}
+protected:
+
+	static size_t request_callback(
+		char *buffer, 
+		size_t size, 
+		size_t nmemb, 
+		void* thisPtr)
+	{
+		if (thisPtr)
+		{
+			//cout << __LINE__ << endl;
+			return ((this)thisPtr)->request_write_data(buffer, size, nmemb);
+		}
+
+		else
+		{
+			//cout << __LINE__ << endl;
+			return 0;
+		}
+
+	}
+	size_t request_write_data(const char *buffer, size_t size, size_t nmemb)
+	{
+		int result = 0;
+		if (buffer != 0)
+		{
+			//cout << __LINE__ << endl;
+			//m_data.clear();
+			m_data.append(buffer, size * nmemb);
+			// response->content.read(&buffer[0], length);
+            // content.write(&buffer[0], length);
+            //m_content.read(buffer,size * nmemb)
+			// cout<<"m_data:"<<m_data.size()<<endl;
+			// cout<<"max_size:"<<m_data.max_size() <<endl;
+			// cout<<"capacity:"<<m_data.capacity()<<endl;
+			result = size * nmemb;
+			// boost::asio::streambuf write_buffer;
+
+		}
+		return result;
+	}
+
+	void curl(
+		const std::string& uri, 
+		const std::string& method = "GET",
+		const std::string& param = "", 
+		const std::string& content = "")
+	{
+		set_url(m_url + uri + "?" + param);
+		//cout << __LINE__ << ":" << uri << endl;
 
 #ifdef DEBUG
-	curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1);
+		curl_easy_setopt(m_curl, CURLOPT_HEADER, 1);
 #endif
-}
+		curl_easy_setopt(m_curl, CURLOPT_WRITEFUNCTION, request_callback);
+		curl_easy_setopt(m_curl, CURLOPT_MAXREDIRS, 50L);
+		curl_easy_setopt(m_curl, CURLOPT_TCP_KEEPALIVE, 1L);
+		curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, method.c_str());
 
-WebClient::WebClient(const std::string& url, std::string user, std::string password) : WebClient() {
-	setURL(url);
-	curl_easy_setopt(m_curl, CURLOPT_HTTPAUTH, (long)CURLAUTH_BASIC);
-	std::string userpassword = user + ":" + password;
-	//std::cout << "384\n" << userpassword << std::endl;
-	curl_easy_setopt(m_curl, CURLOPT_USERPWD, userpassword.c_str());
-	//curl_easy_setopt(m_curl, CURLOPT_USERPWD, "admin:admin");
-	curl_easy_setopt(m_curl, CURLOPT_HTTPHEADER, m_headerlist);
-}
-WebClient::WebClient(const std::string& url, std::string user,std::string password,std::string def) : WebClient() {
-	setURL(url);
-	//curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYPEER, false); // https请求 不验证证书和hosts
-	//curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYHOST, false);
-	//curl_easy_setopt(m_curl, CURLOPT_HTTPAUTH, (long)CURLAUTH_ANY);
-	 string userpass = user + ":" + password;
-	//curl_easy_setopt(m_curl, CURLOPT_HEADER, 1);
-	//curl_easy_setopt(m_curl, CURLOPT_USERPWD, userpass.c_str());
-	////curl_easy_setopt(m_curl, CURLOPT_TLSAUTH_USERNAME, user.c_str());
-	////curl_easy_setopt(m_curl, CURLOPT_TLSAUTH_PASSWORD, password.c_str());
-	//curl_easy_setopt(m_curl, CURLOPT_HTTPHEADER, m_headerlist);
-	/*cout <<__LINE__<<":"<< userpassword << endl;
-	cout <<__LINE__<<":"<<  m_data << endl;*/
+		//curl_easy_setopt(m_curl, CURLOPT_NOPROGRESS,0L);
+		curl_easy_setopt(m_curl, CURLOPT_CLOSESOCKETFUNCTION, close_socket_callback);
 
+		curl_easy_setopt(m_curl, CURLOPT_CLOSESOCKETDATA, this);
+		curl_easy_setopt(m_curl, CURLOPT_POSTFIELDS, content.c_str());
 
-	curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYPEER, false);
-	curl_easy_setopt(m_curl, CURLOPT_SSL_VERIFYHOST, false);
-	curl_easy_setopt(m_curl, CURLOPT_HTTPAUTH, (long)CURLAUTH_ANY);
-	curl_easy_setopt(m_curl, CURLOPT_HEADER, 1);
+  		curl_easy_setopt(m_curl, CURLOPT_POSTFIELDSIZE_LARGE, (curl_off_t)content.length());
+		if(on_request())
+		{
+			if(CURLE_OK==curl_easy_getinfo(m_curl, CURLINFO_RESPONSE_CODE,&m_request_status))
+			{
+				ming_log->get_log_console()->info()<<"get status success";
+				//ming_log->get_log_file()->info()<<"get status success";
+			}
+		}
 
-	curl_easy_setopt(m_curl, CURLOPT_USERPWD, userpass.c_str());
-	//curl_easy_setopt(m_curl, CURLOPT_SSLVERSION, 3);
-
-	curl_easy_setopt(m_curl, CURLOPT_HTTPHEADER, m_headerlist);
-
-	//curl_easy_setopt(m_curl, CURLINFO_HEADER_OUT, true);
-	//curl_easy_setopt(m_curl, CURLOPT_RETURNTRANSFER, true);
-	/*curl_easy_setopt(m_curl, CURLOPT_VERBOSE, true);
-	curl_easy_setopt(m_curl, CURLOPT_TIMEOUT, 10);*/
-	
-
-}
-WebClient::WebClient(const WebClient& orig) {}
-
-/**
-* Generic make request. As default it's a GET request.
-*
-* @return
-*/
-bool WebClient::makeRequest() {
-	m_data.clear();
-	return 0 == curl_easy_perform(m_curl);
-}
-
-/**
-* Make the post request
-*
-* @return bool
-*/
-bool WebClient::makePost() {
-
-	if (encodedPostFields != NULL) {
-		delete encodedPostFields;
 	}
-
-	encodedPostFields = strdup(encodePostFields().c_str());
-
-	curl_easy_setopt(m_curl, CURLOPT_POST, 1);
-	curl_easy_setopt(m_curl, CURLOPT_POSTFIELDS, encodedPostFields);
-	cout << __LINE__<<":"<<m_data << endl;
-	return makeRequest();
-}
-
-/**
-* Make the get request
-*
-* @return bool
-*/
-bool WebClient::makeGet() {
-	curl_easy_setopt(m_curl, CURLOPT_POST, 0);
-
-	return makeRequest();
-}
-
-/**
-* Make delete request
-*
-* @return bool
-*/
-bool WebClient::makeDelete() {
-
-	curl_easy_setopt(m_curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-
-	return makePost();
-}
-
-/**
-*
-* Add new post fields to the request
-*
-* @param key std::string
-* @param value std::string
-* @return void
-*/
-void WebClient::postField(std::string key, std::string value) {
-	m_postfields[key] = value;
-}
-
-/**
-* Reset the post fields
-*/
-void WebClient::reset() {
-	m_postfields.clear();
-}
-
-/**
-* Set url to the curl client
-*
-* @param url
-*/
-void WebClient::setURL(const std::string& url) {
-	curl_easy_setopt(m_curl, CURLOPT_URL, url.c_str());
-}
-
-/**
-*  Encode query to work with curl client
-*
-* @param str
-* @return std::string
-*/
-std::string WebClient::urlEncode(const std::string& str) {
-	char * escaped = curl_easy_escape(m_curl, str.c_str(), str.size());
-	std::string ret = std::string(escaped);
-	curl_free(escaped);
-	return std::string(ret);
-}
-
-/**
-*
-* Encodes the postfields
-* @example username=test&password=test
-*
-* @return std::string
-*/
-std::string WebClient::encodePostFields() {
-
-	std::string urlencoded = "";
-
-	for (std::map<std::string, std::string>::iterator it = m_postfields.begin(); it != m_postfields.end(); ++it)
+	void set_url(const std::string& url) const
 	{
-		if (it != m_postfields.begin())
-			urlencoded.append("&");
-		urlencoded.append(it->first + "=" + it->second);
+		curl_easy_setopt(m_curl, CURLOPT_URL, url.c_str());
+		//ming_log->get_log_console()->info()<<url<<":"<<__FILE__<<":"<<__LINE__;
+		//cout<<url<<":"<<__FILE__<<":"<<__LINE__<<endl;
 	}
-
-	return urlencoded;
-}
-
-/**
-* Static function used as a callback for receiving html/json content
-*
-* @param buffer
-* @param size
-* @param nmemb
-* @param thisPtr
-* @return
-*/
-
-size_t WebClient::writeDataCallback(char *buffer, size_t size, size_t nmemb, void* thisPtr) {
-	if (thisPtr)
-		return ((WebClient*)thisPtr)->writeData(buffer, size, nmemb);
-	else
-		return 0;
-}
-
-/**
-* Function used to write the received html/json content to a c++ string.
-*
-* @param buffer
-* @param size
-* @param nmemb
-* @return
-*/
-size_t WebClient::writeData(const char *buffer, size_t size, size_t nmemb) {
-	int result = 0;
-	if (buffer != 0){
-		m_data.append(buffer, size*nmemb);
-		result = size*nmemb;
+	bool on_request()
+	{
+		m_data.clear();
+		return 0 == curl_easy_perform(m_curl);
 	}
-	/*cout <<__LINE__<<":"<<  buffer << endl;
-	cout << __LINE__<<":"<< m_data << endl;*/
-	return result;
-}
+	static int close_socket_callback(void *clientp, curl_socket_t item)
+	{
+		if (clientp)
+		{
+			//cout << __LINE__ << endl;
+			((this)clientp)->process_content();
+		}
 
-WebClient::~WebClient() {
-
-	if (encodedPostFields) {
-		delete encodedPostFields;
 	}
+	void process_content()
+	{
 
-	curl_easy_cleanup(m_curl);
-	curl_global_cleanup();
-}
+		//cout<<*m_data<<":"<<__FILE__<<":"<<__LINE__<<endl;		
+	}
+	
+	
+public:
+	boost::shared_ptr<std::string> m_data;
+protected:	
+	CURL* m_curl;
+	std::string m_url;
+	static CURLSH* share_handle;	
+	long int m_request_status;
+	// boost::asio::streambuf m_content_buffer;
+	// std::istream m_content;
+};
+CURLSH* curl_client::share_handle = NULL;
 
 
-#endif	/* WEBCLIENT_HPP */
+#endif	/* curl_client_HPP */
 

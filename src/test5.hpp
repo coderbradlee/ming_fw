@@ -350,6 +350,16 @@ namespace x5
             }
         }
     }
+    namespace test_curl_client
+    {
+        void test()
+        {
+            boost::shared_ptr<curl_client> test = 
+            boost::shared_ptr<curl_client>(new curl_client(get_config->m_exchange_rate_url));
+                test->request("GET", "/api/live", "access_key="+get_config->m_exchange_rate_key, "");
+             ming_log->get_log_console()->info()<<test->get_data()<<":"<<__FILE__<<":"<<__LINE__;
+        }
+    }
 	void test()
 	{
         //test_design_model_template_method::test();
@@ -357,7 +367,8 @@ namespace x5
         //test_design_model_observer::test();
         //test_design_model_decorator::test();
         //test_design_model_bridge::test();
-        test_ming_log::test();
+        //test_ming_log::test();
+        test_curl_client::test();
 	}
 
 }
