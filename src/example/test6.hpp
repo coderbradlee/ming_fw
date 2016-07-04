@@ -46,10 +46,76 @@ namespace x6
             }
         }
     }
+    namespace test_design_model_factory
+    {
+        class splitter
+        {
+        public:
+            virtual void split()=0;
+            virtual ~splitter(){}
+        };
+        class file_splitter:public splitter
+        {
+        public:
+            void split()
+            {
+                ming_log->get_log_console()->info()<<"file_splitter:"<<__FILE__<<":"<<__LINE__;
+            }
+        };
+        class video_splitter:public splitter
+        {
+        public:
+            void split()
+            {
+                ming_log->get_log_console()->info()<<"video_splitter:"<<__FILE__<<":"<<__LINE__;
+            }
+        };
+        class splitter_factory
+        {
+        public:
+            virtual boost::shared_ptr<splitter> create()=0;
+            virtual ~splitter_factory(){}
+        };
+        class file_splitter_factory
+        {
+        public:
+            boost::shared_ptr<splitter> create()
+            {
+                return new file_splitter();
+            }
+        };
+        class video_splitter_factory
+        {
+        public:
+            boost::shared_ptr<splitter> create()
+            {
+                return new video_splitter();
+            }
+        };
+        class win_form
+        {
+        public:
+            win_form(boost::shared_ptr<splitter_factory> sf):m_sf(sf)
+            {
+
+            }
+            void click()
+            {
+                boost::shared_ptr<splitter> s=m_sf->create();
+                s->split();
+            }
+        };
+        void test()
+        {
+            boost::shared_ptr<splitter_factory> sf(new video_splitter_factory());
+            boost::shared_ptr<win_form> wf(new win_form(sf));
+            wf->click();
+        }
+    }
 	void test()
-	{
-        
-        test_curl_client::test();
+	{  
+        test_design_model_factory::test();
+        //test_curl_client::test();
 	}
 
 }
