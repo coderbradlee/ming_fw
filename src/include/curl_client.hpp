@@ -76,7 +76,7 @@ protected:
 		if (thisPtr)
 		{
 			//cout << __LINE__ << endl;
-			return ((this)thisPtr)->request_write_data(buffer, size, nmemb);
+			return ((curl_client*)thisPtr)->request_write_data(buffer, size, nmemb);
 		}
 
 		else
@@ -157,7 +157,7 @@ protected:
 		if (clientp)
 		{
 			//cout << __LINE__ << endl;
-			((this)clientp)->process_content();
+			((curl_client*)clientp)->process_content();
 		}
 
 	}
