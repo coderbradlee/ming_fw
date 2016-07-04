@@ -64,7 +64,7 @@ public:
 	        size_t q_size = 4096; //queue size must be power of 2
 	        spdlog::set_async_mode(q_size);
 	        spd::set_pattern("[%l][%Y-%m-%d %H:%M:%S.%e][thread %t]%v");
-	        log_file = spd::rotating_logger_mt("t", get_config->m_log_name, 1048576 * get_config->m_log_size, get_config->m_log_numbers);
+	        log_file = spd::rotating_logger_mt("t", "logs/"+get_config->m_log_name, 1048576 * get_config->m_log_size, get_config->m_log_numbers);
 	            // for (int i = 0; i < 10; ++i)
 	            //     rotating_logger->info("{} * {} equals {:>10}", i, i, i*i);
 	            
