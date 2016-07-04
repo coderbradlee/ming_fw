@@ -341,7 +341,7 @@ namespace x5
                 size_t q_size = 4096; //queue size must be power of 2
                 spdlog::set_async_mode(q_size);
                 spd::set_pattern("[%l][%Y-%m-%d %H:%M:%S.%e][thread %t]%v");
-                auto rotating_logger = spd::rotating_logger_mt("t", "logs/ming_fwsssss", 1048576 * 150, 300);
+                auto rotating_logger = spd::rotating_logger_mt("tttt", "logs/ming_fwsssss", 1048576 * 150, 300);
                 for (int i = 0; i < 1000000; ++i)
                         rotating_logger->info("{} * {} equals {:>10}", i, i, i*i);
                     
