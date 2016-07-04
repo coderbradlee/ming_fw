@@ -63,6 +63,12 @@ class iconfig:public boost::enable_shared_from_this<iconfig>, boost::noncopyable
 			m_mysql_js_username = m_pt.get<std::string>("mysql_js.username");
 			m_mysql_js_password = m_pt.get<std::string>("mysql_js.password");
 			m_mysql_js_database = m_pt.get<std::string>("mysql_js.database");
+
+
+			m_log_name = m_pt.get<std::string>("log.name");
+			m_log_level = m_pt.get<std::string>("log.level");
+			m_log_size = m_pt.get<size_t>("log.size");
+			m_log_numbers = m_pt.get<size_t>("log.numbers");
 		}
 	public:
 		boost::property_tree::ptree m_pt;
@@ -106,6 +112,10 @@ class iconfig:public boost::enable_shared_from_this<iconfig>, boost::noncopyable
 		string m_exchange_rate_write_rate_queue;
 		static boost::mutex m_mu;	
 		static boost::shared_ptr<iconfig> m_ps;
+		string m_log_name;
+		string m_log_level;
+		size_t m_log_size;
+		size_t m_log_numbers;
 };
 boost::shared_ptr<iconfig> iconfig::m_ps = nullptr;
 boost::mutex iconfig::m_mu;

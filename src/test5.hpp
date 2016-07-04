@@ -315,14 +315,26 @@ namespace x5
             cout<<"---------------------"<<endl;
         }
     }
+    namespace test_ming_log
+    {
+        void test()
+        {
+            log_consoles->info("info can be seen")<<"Streams are supported too  ";
+            log_files->info("info can be seen")<<"Streams are supported too  ";
 
+            log_consoles->debug("debug can not be seen")<<"Streams are supported too  ";
+            log_files->debug("debug can not be seen")<<"Streams are supported too  ";
+
+        }
+    }
 	void test()
 	{
         //test_design_model_template_method::test();
         //test_design_model_strategy::test();
         //test_design_model_observer::test();
-        test_design_model_decorator::test();
+        //test_design_model_decorator::test();
         //test_design_model_bridge::test();
+        test_ming_log::test();
 	}
 
 }

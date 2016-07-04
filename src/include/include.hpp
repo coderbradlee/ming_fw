@@ -59,7 +59,7 @@ using namespace boost::posix_time;
 #include <sstream>
 #include <boost/assign/list_of.hpp>
 #include <boost/lexical_cast.hpp>
-
+#include "config.hpp"
 // #include "json_spirit/json_spirit_reader.h"
 // #include "json_spirit/json_spirit_value.h" 
 // #include "json_spirit/json_spirit_writer.h" 
@@ -79,5 +79,6 @@ using namespace boost::posix_time;
 //////////reduce compile time
 // #include <boost/asio/impl/src.hpp>
 // #define BOOST_ASIO_SEPARATE_COMPILATION
+#include "ming_log.hpp"
 #endif
 

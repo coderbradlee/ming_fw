@@ -12,19 +12,19 @@ void test_ming_fw()
 {
     try
     {
-    spd::set_level(spd::level::info);
-    auto console = spd::stdout_logger_mt("console", true);
-    spd::get("console")->set_level(spd::level::debug);
-    spd::get("console")->info("can be seen");
+        spd::set_level(spd::level::info);
+        auto console = spd::stdout_logger_mt("console", true);
+        spd::get("console")->set_level(spd::level::debug);
+        spd::get("console")->info("can be seen");
 
-    size_t q_size = 4096; //queue size must be power of 2
-    spdlog::set_async_mode(q_size);
-    spd::set_pattern("[%l][%Y-%m-%d %H:%M:%S.%e][thread %t]%v");
-    auto rotating_logger = spd::rotating_logger_mt("t", "logs/ming_fw", 1048576 * 15, 300);
-        for (int i = 0; i < 10; ++i)
-            rotating_logger->info("{} * {} equals {:>10}", i, i, i*i);
-        
-    spdlog::drop_all();
+        size_t q_size = 4096; //queue size must be power of 2
+        spdlog::set_async_mode(q_size);
+        spd::set_pattern("[%l][%Y-%m-%d %H:%M:%S.%e][thread %t]%v");
+        auto rotating_logger = spd::rotating_logger_mt("t", "logs/ming_fw", 1048576 * 15, 300);
+            for (int i = 0; i < 10; ++i)
+                rotating_logger->info("{} * {} equals {:>10}", i, i, i*i);
+            
+        spdlog::drop_all();
     }
 
     catch (const spd::spdlog_ex& ex)

@@ -1,15 +1,15 @@
-#include "config.hpp"
+#include "include.hpp"
 
 #include "test5.hpp"
-#include "example_spdlog.h"
+
 int main()
 {
 	try
 	{
 		{
-			test_ming_fw();
+			//test_ming_fw();
 			//test_spdlog();
-			//x5::test();
+			x5::test();
 			//this_thread::sleep_for(chrono::seconds(10));
 			//test1();
 		}
