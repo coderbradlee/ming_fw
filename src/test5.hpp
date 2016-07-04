@@ -319,11 +319,11 @@ namespace x5
     {
         void test()
         {
-            ming_log->log_console->info("info can be seen")<<"Streams are supported too  ";
-            ming_log->log_file->info("info can be seen")<<"Streams are supported too  ";
+            ming_log->get_log_console()->info("info can be seen")<<"Streams are supported too  ";
+            ming_log->get_log_file()->info("info can be seen")<<"Streams are supported too  ";
 
-            ming_log->log_console->debug("debug can not be seen")<<"Streams are supported too  ";
-            ming_log->log_file->debug("debug can not be seen")<<"Streams are supported too  ";
+            ming_log->get_log_console()->debug("debug can not be seen")<<"Streams are supported too  ";
+            ming_log->get_log_file()->debug("debug can not be seen")<<"Streams are supported too  ";
 
         }
     }

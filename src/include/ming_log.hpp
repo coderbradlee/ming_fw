@@ -74,17 +74,24 @@ public:
 			std::cout << "FAILURE: " << e.what() << std::endl;
 		}
 	}
-	
+	std::shared_ptr<spd::logger> get_log_file()
+	{
+		return log_file;
+	}
+	std::shared_ptr<spd::logger> get_log_console()
+	{
+		return log_console;
+	}
 private:
 	static boost::mutex mu_;
 	static boost::shared_ptr<singleton_ming_log> ps_;
-	static std::shared_ptr<spd::logger> log_file;
-	static std::shared_ptr<spd::logger> log_console;	
+	std::shared_ptr<spd::logger> log_file;
+	std::shared_ptr<spd::logger> log_console;	
 };
 boost::shared_ptr<singleton_ming_log> singleton_ming_log::ps_ = nullptr;
 boost::mutex singleton_ming_log::mu_;
-std::shared_ptr<spd::logger> singleton_ming_log::log_file;
-std::shared_ptr<spd::logger> singleton_ming_log::log_console;
+// std::shared_ptr<spd::logger> singleton_ming_log::log_file;
+// std::shared_ptr<spd::logger> singleton_ming_log::log_console;
 boost::shared_ptr<singleton_ming_log> ming_log = singleton_ming_log::get_instance();
 // typedef singleton_ming_log::get_instance()->log_file log_files;
 // typedef singleton_ming_log::get_instance()->log_console log_consoles;
