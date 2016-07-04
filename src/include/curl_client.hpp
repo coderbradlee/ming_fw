@@ -11,7 +11,7 @@
 class curl_client:boost::noncopyable
 {
 	public:
-	curl_client(const std::string& url) : m_url(url),m_request_status(0))
+	curl_client(const std::string& url) : m_url(url),m_request_status(0)
 	{
 		//register callback
 		//register_callback();
