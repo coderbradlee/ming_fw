@@ -1,5 +1,5 @@
 #pragma once
-#include "example_spdlog.h"
+#include "spdlog/spdlog.h"
 namespace spd = spdlog;
 class singleton_ming_log :public boost::enable_shared_from_this<singleton_ming_log>, boost::noncopyable
 {
