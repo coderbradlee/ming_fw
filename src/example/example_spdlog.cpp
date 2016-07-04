@@ -19,8 +19,8 @@ void test_ming_fw()
 
     size_t q_size = 4096; //queue size must be power of 2
     spdlog::set_async_mode(q_size);
-    //spd::set_pattern("[%H:%M:%S %z] [thread %t] %v ***");
-    auto rotating_logger = spd::rotating_logger_mt("[thread %t]", "logs/ming_fw", 1048576 * 15, 300);
+    spd::set_pattern("[%l][%Y-%m-%d %H:%M:%S.%e][thread %t][%n] %v");
+    auto rotating_logger = spd::rotating_logger_mt("t", "logs/ming_fw", 1048576 * 15, 300);
         for (int i = 0; i < 10; ++i)
             rotating_logger->info("{} * {} equals {:>10}", i, i, i*i);
         
