@@ -9,7 +9,7 @@ int main()
 		{
 			//test_ming_fw();
 			//test_spdlog();
-			x5::test();
+			x6::test();
 			//this_thread::sleep_for(chrono::seconds(10));
 			//test1();
 		}
