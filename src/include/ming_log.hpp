@@ -101,8 +101,8 @@ public:
 		return log_console;
 	}
 private:
-	static boost::mutex mu_{};
-	static boost::shared_ptr<singleton_ming_log> ps_{nullptr};
+	static boost::mutex mu_;
+	static boost::shared_ptr<singleton_ming_log> ps_;
 	std::shared_ptr<spd::logger> log_file;
 	std::shared_ptr<spd::logger> log_console;	
 };
