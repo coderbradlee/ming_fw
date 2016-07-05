@@ -98,9 +98,9 @@
 
 	void curl_client::curl(
 		const std::string& uri, 
-		const std::string& method = "GET",
-		const std::string& param = "", 
-		const std::string& content = "")
+		const std::string& method,
+		const std::string& param, 
+		const std::string& content)
 	{
 		set_url(m_url + uri + "?" + param);
 		//cout << __LINE__ << ":" << uri << endl;
