@@ -56,7 +56,7 @@
 		return m_data.length();
 	}
 
-	static size_t curl_client::request_callback(
+	size_t curl_client::request_callback(
 		char *buffer, 
 		size_t size, 
 		size_t nmemb, 
@@ -141,7 +141,7 @@
 		m_data.clear();
 		return 0 == curl_easy_perform(m_curl);
 	}
-	static int curl_client::close_socket_callback(void *clientp, curl_socket_t item)
+	int curl_client::close_socket_callback(void *clientp, curl_socket_t item)
 	{
 		if (clientp)
 		{
