@@ -1,5 +1,6 @@
 #ifndef SPD_MING_LOG_HPP
 #define	SPD_MING_LOG_HPP
+#include "include.hpp"
 #include "spdlog/spdlog.h"
 namespace spd = spdlog;
 class singleton_ming_log :public boost::enable_shared_from_this<singleton_ming_log>, boost::noncopyable
