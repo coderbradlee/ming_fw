@@ -1,6 +1,6 @@
 #ifndef CURL_CLIENT_HPP
 #define	CURL_CLIENT_HPP
-
+#include "include.hpp"
 #include <curl/curl.h>
 #include <string.h>
 #include <cstdarg>
