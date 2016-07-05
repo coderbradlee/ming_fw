@@ -1,6 +1,6 @@
 #include "include.hpp"
 
-#include "test6.hpp"
+#include "test7.h"
 
 int main()
 {
@@ -9,7 +9,7 @@ int main()
 		{
 			//test_ming_fw();
 			//test_spdlog();
-			x6::test();
+			x7::test();
 			//this_thread::sleep_for(chrono::seconds(10));
 			//test1();
 		}
