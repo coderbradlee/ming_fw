@@ -42,7 +42,7 @@ namespace x7
         public:
             virtual shared_ptr<IDBconnection_base> create_connection()=0;
             virtual shared_ptr<IDBcommand_base> create_command()=0;
-            virtual ~IDBbase_factory(){}
+            virtual ~IDB_base_factory(){}
         };
         class IDB_factory:public IDB_base_factory
         {
