@@ -105,6 +105,6 @@ private:
 	std::shared_ptr<spd::logger> log_file;
 	std::shared_ptr<spd::logger> log_console;	
 };
-
+extern boost::shared_ptr<singleton_ming_log> ming_log;
 
 #endif
