@@ -96,3 +96,4 @@
 
 boost::shared_ptr<singleton_ming_log> singleton_ming_log::ps_ = nullptr;
 boost::mutex singleton_ming_log::mu_;
+boost::shared_ptr<singleton_ming_log> ming_log = singleton_ming_log::get_instance();

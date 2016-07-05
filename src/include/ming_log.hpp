@@ -27,7 +27,8 @@ private:
 // std::shared_ptr<spd::logger> singleton_ming_log::log_file;
 // std::shared_ptr<spd::logger> singleton_ming_log::log_console;
 //boost::shared_ptr<singleton_ming_log> ming_log = singleton_ming_log::get_instance();
-#define ming_log singleton_ming_log::get_instance()
+extern boost::shared_ptr<singleton_ming_log> ming_log;
+//#define ming_log singleton_ming_log::get_instance()
 //using ming_log=singleton_ming_log::get_instance();
 // typedef singleton_ming_log::get_instance()->log_file log_files;
 // typedef singleton_ming_log::get_instance()->log_console log_consoles;
