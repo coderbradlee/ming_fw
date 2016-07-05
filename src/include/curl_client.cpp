@@ -1,5 +1,3 @@
-#ifndef CURL_CLIENT_HPP
-#define	CURL_CLIENT_HPP
 
 #include "curl_client.hpp"
 
@@ -160,6 +158,4 @@
 
 CURLSH* curl_client::share_handle = NULL;
 
-
-#endif	/* curl_client_HPP */
 
