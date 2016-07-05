@@ -80,6 +80,7 @@ using namespace boost::posix_time;
 // #include <boost/asio/impl/src.hpp>
 // #define BOOST_ASIO_SEPARATE_COMPILATION
 #include "ming_log.hpp"
+#define ming_log singleton_ming_log::get_instance()
 #include "curl_client.hpp"
 #endif
 
