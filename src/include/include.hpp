@@ -82,5 +82,6 @@ using namespace boost::posix_time;
 #include "ming_log.hpp"
 
 #include "curl_client.hpp"
+#include "mysql_connect.hpp"
 #endif
 

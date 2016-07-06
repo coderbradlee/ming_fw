@@ -9,9 +9,11 @@ int main()
 		{
 			//test_ming_fw();
 			//test_spdlog();
-			x7::test();
+			//x7::test();
 			//this_thread::sleep_for(chrono::seconds(10));
 			//test1();
+			mysql_connect m;
+			m.test();
 		}
 		
 
