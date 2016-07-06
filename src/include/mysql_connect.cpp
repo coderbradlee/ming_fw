@@ -11,7 +11,7 @@ void mysql_connect::test()
 	  boost::shared_ptr<sql::PreparedStatement> pstmt;
 
 	  /* Create a connection */
-	  driver = boost::shared_ptr<sql::Driver>(sql::mysql::get_driver_instance());
+	  driver = boost::shared_ptr<sql::Driver>(/*sql::mysql::*/get_driver_instance());
 	  con = boost::shared_ptr<sql::Connection>(driver->connect("tcp://"+get_config->m_mysql_ip+":"+boost::lexical_cast<string>(get_config->m_mysql_port), get_config->m_mysql_username, get_config->m_mysql_password));
 	  /* Connect to the MySQL test database */
 	  con->setSchema(get_config->m_mysql_database);
