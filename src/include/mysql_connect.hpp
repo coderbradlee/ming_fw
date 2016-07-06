@@ -1,5 +1,6 @@
 #ifndef MYSQL_CONNECT_HPP
 #define	MYSQL_CONNECT_HPP
+#include "include.hpp"
 #include "mysql_connection.h"
 #include "config.hpp"
 #include <cppconn/driver.h>
