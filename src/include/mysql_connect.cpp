@@ -15,7 +15,7 @@ void mysql_connect::test()
 	{
 	  
 	  /* '?' is the supported placeholder syntax */
-	  m_pstmt = boost::shared_ptr<sql::PreparedStatement>(con->prepareStatement("insert into t_currency_daily_exchange_rate values(rand_string(20),'TFTBLZNSNBNAZAZGC2RW','2016','03','11',?,'2016-03-11','2016-03-11 14:51:05','','','','','',0,1)"));
+	  m_pstmt = boost::shared_ptr<sql::PreparedStatement>(m_con->prepareStatement("insert into t_currency_daily_exchange_rate values(rand_string(20),'TFTBLZNSNBNAZAZGC2RW','2016','03','11',?,'2016-03-11','2016-03-11 14:51:05','','','','','',0,1)"));
 	  for (int i = 1; i <= 1; i++) 
 	  {
 	    //pstmt->setInt(1, i);
@@ -25,7 +25,7 @@ void mysql_connect::test()
 
 	  string query="select * from t_currency_daily_exchange_rate where exchange_rate_id='TFTBLZNSNBNAZAZGC2RW' and exchange_date='2016-03-11'";
 	  m_pstmt = boost::shared_ptr<sql::PreparedStatement>(con->prepareStatement(query));
-	  m_res = boost::shared_ptr<sql::ResultSet>(pstmt->executeQuery());
+	  m_res = boost::shared_ptr<sql::ResultSet>(m_pstmt->executeQuery());
 
 	  while (m_res->next()) 
 	  {
@@ -49,7 +49,7 @@ void test()
 	info->password=get_config->m_mysql_password;
 	info->database=get_config->m_mysql_database;
 
-	info.port=boost::lexical_cast<string>(get_config->m_mysql_port);
+	info->port=boost::lexical_cast<string>(get_config->m_mysql_port);
 	mysql_connect m(info);
 	m.test();
 }
