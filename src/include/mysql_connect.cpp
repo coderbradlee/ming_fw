@@ -42,7 +42,7 @@ void mysql_connect::test()
 
 	  // delete pstmt;
 	  // delete con;
-	  string query="select * from t_currency_daily_exchange_rate where exchange_rate_id='0AJKPBDE6DGOMV4G0Q3Z' and createBy='exchange_gw'";
+	  string query="select * from t_currency_daily_exchange_rate where createBy='exchange_gw'";
 	  pstmt = boost::shared_ptr<sql::PreparedStatement>(con->prepareStatement(query));
 	  res = boost::shared_ptr<sql::ResultSet>(pstmt->executeQuery());
 
