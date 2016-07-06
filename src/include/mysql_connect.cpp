@@ -24,7 +24,7 @@ void mysql_connect::test()
 	  }
 
 	  string query="select * from t_currency_daily_exchange_rate where exchange_rate_id='TFTBLZNSNBNAZAZGC2RW' and exchange_date='2016-03-11'";
-	  m_pstmt = boost::shared_ptr<sql::PreparedStatement>(con->prepareStatement(query));
+	  m_pstmt = boost::shared_ptr<sql::PreparedStatement>(m_con->prepareStatement(query));
 	  m_res = boost::shared_ptr<sql::ResultSet>(m_pstmt->executeQuery());
 
 	  while (m_res->next()) 
