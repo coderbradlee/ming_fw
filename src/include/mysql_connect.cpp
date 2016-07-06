@@ -47,16 +47,16 @@ void mysql_connect::test()
 
 	  while (res->next()) 
 	  {
-			ming_log->get_log_console()->info()<< "\t... MySQL replies: " << res->getString("_message") << endl;
-			ming_log->get_log_console()->info()<< "\t... say it again, MySQL" << endl;
-			ming_log->get_log_console()->info()<< "\t....MySQL replies: " << res->getString(1) << endl;
+			ming_log->get_log_console()->info()<< "\t... MySQL replies: " << res->getString("_message");
+			ming_log->get_log_console()->info()<< "\t... say it again, MySQL";
+			ming_log->get_log_console()->info()<< "\t....MySQL replies: " << res->getString(1);
 		}
 	} 
 	catch (sql::SQLException &e) 
 	{
 	  ming_log->get_log_console()->info()<< "# ERR: " << e.what();
 	  ming_log->get_log_console()->info()<< " (MySQL error code: " << e.getErrorCode();
-	  ming_log->get_log_console()->info()<< ", SQLState: " << e.getSQLState() << " )" << endl;
+	  ming_log->get_log_console()->info()<< ", SQLState: " << e.getSQLState() << " )";
 	}
 
 }
