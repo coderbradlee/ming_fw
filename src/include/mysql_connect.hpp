@@ -28,7 +28,7 @@ private:
 	boost::shared_ptr<sql::Statement> m_stmt;
 	boost::shared_ptr<sql::ResultSet> m_res;
 	boost::shared_ptr<sql::PreparedStatement> m_pstmt;
-	sql::Driver* m_driver
+	sql::Driver* m_driver;
 	boost::shared_ptr<mysql_info> m_mysql_info;
 };
 void test();
