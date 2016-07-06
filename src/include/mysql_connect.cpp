@@ -16,7 +16,7 @@ void mysql_connect::test()
 	  con->setSchema(get_config->m_mysql_database);
 
 	  /* '?' is the supported placeholder syntax */
-	  pstmt = boost::shared_ptr<sql::PreparedStatement>(con->prepareStatement("insert into t_currency_daily_exchange_rate values(rand_string(20),'TFTBLZNSNBNAZAZGC2RW','2016','03','11',(?),'2016-03-11','2016-03-11 14:51:05','','','','','',0,1);"));
+	  pstmt = boost::shared_ptr<sql::PreparedStatement>(con->prepareStatement("insert into t_currency_daily_exchange_rate values(rand_string(20),'TFTBLZNSNBNAZAZGC2RW','2016','03','11',(?),'2016-03-11','2016-03-11 14:51:05','','','','','',0,1)"));
 	  for (int i = 1; i <= 1; i++) 
 	  {
 	    //pstmt->setInt(1, i);
