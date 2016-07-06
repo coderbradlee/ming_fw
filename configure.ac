@@ -14,7 +14,7 @@ AC_PROG_CC
 AC_PROG_RANLIB
 # Checks for libraries. -DBOOST_ASIO_ENABLE_HANDLER_TRACKING
 # CXXFLAGS="-std=c++14 -pg -O0 -Isrc -Iinclude -I/usr/include/apr-1 -I/usr/include/c++/5.1.0 -I/usr/include/c++ -Werror -Wno-deprecated-declarations -lboost_program_options -lboost_filesystem -lboost_coroutine -lboost_system -lboost_thread -lpthread -lboost_context -lboost_date_time -lboost_log_setup -lboost_log -lssl -lcrypto -lboost_regex -lcurl -lboost_timer -DBUILD_SSL -lboost_signals -lboost_locale"
-CXXFLAGS="-std=c++14 -O2 -Isrc -Iinclude -Isrc/include -Isrc/example -I/usr/include/apr-1 -I/usr/include/c++/5.1.0 -I/usr/include/c++ -Werror -Wno-deprecated-declarations -lboost_program_options -lboost_filesystem -lboost_coroutine -lboost_system -lboost_thread -lpthread -lboost_context -lboost_date_time -lboost_log_setup -lboost_log -lssl -lcrypto -lboost_regex -lcurl -lboost_timer -DBUILD_SSL -lboost_signals -lboost_locale"
+CXXFLAGS="-std=c++14 -O2 -Isrc -Iinclude -Isrc/include -Isrc/example -I/usr/include/apr-1 -I/usr/include/c++/5.1.0 -I/usr/include/c++ -I/usr/local/include -I/usr/local/include/cppconn -Werror -Wno-deprecated-declarations -lboost_program_options -lboost_filesystem -lboost_coroutine -lboost_system -lboost_thread -lpthread -lboost_context -lboost_date_time -lboost_log_setup -lboost_log -lssl -lcrypto -lboost_regex -lcurl -lboost_timer -DBUILD_SSL -lboost_signals -lboost_locale -lmysqlcppconn"
 SUBDIRS = src src/include
 # Checks for header files.
 

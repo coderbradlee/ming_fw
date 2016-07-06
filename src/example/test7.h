@@ -59,6 +59,10 @@ namespace x7
             shared_ptr<IDB_base_factory> m_IDB_factory;
         };
     }
+    namespace test_mysql
+    {
+      void test();
+    }
     void test();
 }
 #endif

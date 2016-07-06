@@ -37,10 +37,17 @@ namespace x7
             e->get();
         }
     }
+    namespace test_mysql
+    {
+      void test()
+      {
+        
+      }
+    }
 	void test()
 	{  
-        test_design_model_abstract_factory::test();
-        
+        //test_design_model_abstract_factory::test();
+        test_mysql::test();
 	}
 
 }
