@@ -48,7 +48,7 @@ void mysql_connect::test()
 
 	  while (res->next()) 
 	  {
-			ming_log->get_log_console()->info()<< res->getString(0)<<":" << res->getString("exchange_ratio");
+			ming_log->get_log_console()->info()<< res->getString(1)<<":" << res->getString("exchange_ratio");
 			
 		}
 	} 
@@ -56,7 +56,7 @@ void mysql_connect::test()
 	{
 	  ming_log->get_log_console()->info()<< "# ERR: " << e.what();
 	  ming_log->get_log_console()->info()<< " (MySQL error code: " << e.getErrorCode();
-	  ming_log->get_log_console()->info()<< ", SQLState: " << e.getSQLState() << " )";
+	  ming_log->get_log_console()->info()<< ", SQLState: " << e.getSQLState();
 	}
 
 }
