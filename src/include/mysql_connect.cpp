@@ -42,13 +42,13 @@ void mysql_connect::test()
 
 	  // delete pstmt;
 	  // delete con;
-	  string query="select * from t_currency_daily_exchange_rate where exchange_rate_id='UCFB3WJQ5MSOX5CJDNXD' and createBy='exchange_gw'";
+	  string query="select * from t_currency_daily_exchange_rate where exchange_rate_id='0AJKPBDE6DGOMV4G0Q3Z' and createBy='exchange_gw'";
 	  pstmt = boost::shared_ptr<sql::PreparedStatement>(con->prepareStatement(query));
 	  res = boost::shared_ptr<sql::ResultSet>(pstmt->executeQuery());
 
 	  while (res->next()) 
 	  {
-			ming_log->get_log_console()->info()<< "\t... MySQL replies: " << res->getString("_message");
+			ming_log->get_log_console()->info()<< "\t... MySQL replies: " << res->getString("exchange_ratio");
 			ming_log->get_log_console()->info()<< "\t... say it again, MySQL";
 			ming_log->get_log_console()->info()<< "\t....MySQL replies: " << res->getString(1);
 		}
