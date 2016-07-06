@@ -10,39 +10,23 @@ void mysql_connect::test()
 	  boost::shared_ptr<sql::ResultSet> res;
 	  boost::shared_ptr<sql::PreparedStatement> pstmt;
 
-	  /* Create a connection */
-	  //driver = boost::shared_ptr<sql::Driver>(/*sql::mysql::*/get_driver_instance());
 	  sql::Driver* driver = get_driver_instance();
 	  con = boost::shared_ptr<sql::Connection>(driver->connect("tcp://"+get_config->m_mysql_ip+":"+boost::lexical_cast<string>(get_config->m_mysql_port), get_config->m_mysql_username, get_config->m_mysql_password));
 	  /* Connect to the MySQL test database */
 	  con->setSchema(get_config->m_mysql_database);
 
-	  // stmt = con->createStatement();
-	  // stmt->execute("DROP TABLE IF EXISTS test");
-	  // stmt->execute("CREATE TABLE test(id INT)");
-	  // delete stmt;
-
 	  /* '?' is the supported placeholder syntax */
-	  // pstmt = con->prepareStatement("INSERT INTO test(id) VALUES (?)");
-	  // for (int i = 1; i <= 10; i++) {
-	  //   pstmt->setInt(1, i);
-	  //   pstmt->executeUpdate();
-	  // }
-	  // delete pstmt;
+	  pstmt = boost::shared_ptr<sql::PreparedStatement>(con->prepareStatement("insert into t_currency_daily_exchange_rate values(rand_string(20),'TFTBLZNSNBNAZAZGC2RW','2016','03','11',?,'2016-03-11','2016-03-11 14:51:05','','','','','',0,1);"));
+	  for (int i = 1; i <= 1; i++) 
+	  {
+	    //pstmt->setInt(1, i);
+	    pstmt->setDouble(1, 0.772558);
+	    pstmt->executeUpdate();
+	  }
+	 
 
-	  /* Select in ascending order */
-	  //pstmt = con->prepareStatement("SELECT id FROM test ORDER BY id ASC");
-	  // res = pstmt->executeQuery();
-
-	  // /* Fetch in reverse = descending order! */
-	  // res->afterLast();
-	  // while (res->previous())
-	  //   cout << "\t... MySQL counts: " << res->getInt("id") << endl;
-	  // delete res;
-
-	  // delete pstmt;
-	  // delete con;
-	  string query="select * from t_currency_daily_exchange_rate where exchange_rate_id='TFTBLZNSNBNAZAZGC2RW' and createBy='exchange_gw'";
+	  
+	  string query="select * from t_currency_daily_exchange_rate where exchange_rate_id='TFTBLZNSNBNAZAZGC2RW' and createBy='exchange_gw and exchange_date='2016-03-11'";
 	  pstmt = boost::shared_ptr<sql::PreparedStatement>(con->prepareStatement(query));
 	  res = boost::shared_ptr<sql::ResultSet>(pstmt->executeQuery());
 
