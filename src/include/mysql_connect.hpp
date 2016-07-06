@@ -14,7 +14,7 @@ struct mysql_info
  	string port;
  	string username;
  	string password;
- 	string data_base;
+ 	string database;
  }; 
 
 class mysql_connect

@@ -4,7 +4,7 @@
 mysql_connect::mysql_connect(boost::shared_ptr<mysql_info> in):m_mysql_info(in)
 {
 	m_driver = get_driver_instance();
-	m_con = boost::shared_ptr<sql::Connection>(driver->connect("tcp://"+m_mysql_info->ip+":"+m_mysql_info->port, m_mysql_info->username, m_mysql_info->password));
+	m_con = boost::shared_ptr<sql::Connection>(m_driver->connect("tcp://"+m_mysql_info->ip+":"+m_mysql_info->port, m_mysql_info->username, m_mysql_info->password));
 	
 	m_con->setSchema(m_mysql_info->database);
 
