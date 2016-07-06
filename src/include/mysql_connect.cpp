@@ -43,7 +43,7 @@ void mysql_connect::test()
 }
 void test()
 {
-	boost::shared_ptr<mysql_info> info;
+	boost::shared_ptr<mysql_info> info(new mysql_info());
 	info->ip=get_config->m_mysql_ip;
 	info->username=get_config->m_mysql_username;
 	info->password=get_config->m_mysql_password;
